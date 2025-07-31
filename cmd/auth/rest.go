@@ -44,6 +44,7 @@ func serve(cmd *cobra.Command, args []string) error {
 	cfgDBTable := config.GetTable(cfgPath)
 	cfgRedis := config.GetRedis(cfgPath)
 	cfgSentry := config.GetSentry(cfgPath)
+	cfgInvoice := config.GetInvoice(cfgPath)
 
 	ctx := context.Background()
 	lgr := logger.DefaultOutStructLogger
@@ -90,7 +91,7 @@ func serve(cmd *cobra.Command, args []string) error {
 	}()
 
 	go func() {
-		if err := startApiServer(cfgApp, invoiceSvc, grpcConn, lgr); err != nil {
+		if err := startApiServer(cfgApp, invoiceSvc, grpcConn, lgr, cfgInvoice); err != nil {
 			errChan <- err
 		}
 	}()

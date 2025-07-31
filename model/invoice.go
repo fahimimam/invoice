@@ -1,10 +1,6 @@
 package model
 
-import (
-	"github.com/lib/pq"
-	"github.com/triapex/auth/utils"
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type GoogleSSOClaims struct {
 	Email string `json:"email"`
@@ -16,13 +12,38 @@ type CreateInvoicePayload struct {
 
 // InvoiceInfo define user details
 type InvoiceInfo struct {
-	gorm.Model
-	FirstName string         `json:"first_name" gorm:"column:first_name"`
-	LastName  string         `json:"last_name" gorm:"column:last_name"`
-	Phone     string         `json:"phone" gorm:"column:phone;unique"`
-	Email     string         `json:"email" gorm:"column:email;unique"`
-	Password  string         `json:"password" gorm:"column:password"`
-	Type      utils.UserType `json:"type" gorm:"column:type"`
-	Roles     pq.StringArray `json:"roles" gorm:"type:text[];column:roles"`
-	Verified  bool           `json:"verified" gorm:"column:verified"`
+	*gorm.Model
+	UserId         string         `json:"userId"`
+	ClientId       string         `json:"clientId"`
+	InvoiceDate    string         `json:"invoiceDate"`
+	InvoiceId      int            `json:"invoiceId"`
+	DueDate        string         `json:"dueDate"`
+	Subtotal       string         `json:"subtotal"`
+	Vat            string         `json:"vat"`
+	Paid           string         `json:"paid"`
+	IsPaid         string         `json:"isPaid"`
+	Comment        string         `json:"comment"`
+	CardAcceptable string         `json:"cardAcceptable"`
+	SellerAddress  InvoiceAddress `json:"sellerAddress"`
+	BuyerAddress   InvoiceAddress `json:"buyerAddress"`
+	Items          []struct {
+		InvoiceItemId string `json:"invoiceItemId"`
+		ItemId        string `json:"itemId"`
+		Taxable       string `json:"taxable"`
+		Rate          int    `json:"rate"`
+		ItemName      string `json:"itemName"`
+		Description   string `json:"description"`
+		Qty           int    `json:"qty"`
+		Tags          string `json:"tags"`
+	} `json:"items"`
+}
+
+type InvoiceAddress struct {
+	Name    string
+	Street  string
+	Zip     string
+	City    string
+	Country string
+	Phone   string
+	Email   string
 }

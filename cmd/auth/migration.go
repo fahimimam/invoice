@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"fmt"
-	"github.com/lib/pq"
 	"github.com/spf13/cobra"
 	"github.com/triapex/auth/config"
 	"github.com/triapex/auth/internal/infra/postgres"
@@ -72,13 +71,13 @@ var migrationUp = &cobra.Command{
 
 			log.Printf("Created organization '%s'", invoiceConfig.FirstName)
 			invoice := &model.InvoiceInfo{
-				FirstName: invoiceConfig.FirstName,
-				LastName:  invoiceConfig.LastName,
-				Phone:     invoiceConfig.Phone,
-				Email:     invoiceConfig.Email,
-				Password:  invoiceConfig.Password,
-				Roles:     pq.StringArray(invoiceConfig.Roles), // Optional but dynamic if present
-				Verified:  true,
+				//FirstName: invoiceConfig.FirstName,
+				//LastName:  invoiceConfig.LastName,
+				//Phone:     invoiceConfig.Phone,
+				//Email:     invoiceConfig.Email,
+				//Password:  invoiceConfig.Password,
+				//Roles:     pq.StringArray(invoiceConfig.Roles), // Optional but dynamic if present
+				//Verified:  true,
 			}
 
 			_, err := invoiceSVC.CreateInvoice(ctx, &model.CreateInvoicePayload{

@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func NewGatewayForIdentity(grpcConn *grpc.ClientConn, certPEM, keyPEM, mspID string, identityConfig *config.Invoice) (*client.Gateway, *client.Contract, error) {
+func NewGatewayForIdentity(grpcConn *grpc.ClientConn, certPEM, keyPEM, mspID string, identityConfig *config.Identity) (*client.Gateway, *client.Contract, error) {
 
 	certBytes, err := base64.StdEncoding.DecodeString(certPEM)
 	if err != nil {
