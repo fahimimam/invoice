@@ -8,7 +8,7 @@ RUN apk add --no-cache --update git
 ENV GOPATH=/go
 
 # Set apps source directory
-ENV SRC_DIR=${GOPATH}/src/github.com/triapex/auth
+ENV SRC_DIR=${GOPATH}/src/github.com/fahimimam/invoice
 
 # Define current working directory
 WORKDIR ${SRC_DIR}

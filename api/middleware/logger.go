@@ -1,8 +1,8 @@
 package middleware
 
 import (
+	"github.com/fahimimam/invoice/logger"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/triapex/auth/logger"
 	"net/http"
 )
 

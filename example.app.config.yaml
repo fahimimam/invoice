@@ -40,12 +40,9 @@ sentry:
   dsn: <sentry-here>
 
 smart_contract:
-  identity:
-    channel: identity
-    chain_code: identity
   invoice:
-    channel: invoice
-    chain_code: invoice
+    channel_name: invoice
+    chain_code_name: invoice
 
 migration:
   org:
