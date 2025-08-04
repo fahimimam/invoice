@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"github.com/triapex/auth/logger"
 	"net/http"
 )
 

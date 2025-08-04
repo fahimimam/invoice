@@ -18,24 +18,30 @@ type InvoiceInfo struct {
 	InvoiceDate    string         `json:"invoiceDate"`
 	InvoiceId      int            `json:"invoiceId"`
 	DueDate        string         `json:"dueDate"`
-	Subtotal       string         `json:"subtotal"`
+	Date           string         `json:"date"`
+	Total          float64        `json:"total"`
+	Subtotal       float64        `json:"subtotal"`
 	Vat            string         `json:"vat"`
 	Paid           string         `json:"paid"`
+	Status         string         `json:"status"`
 	IsPaid         string         `json:"isPaid"`
 	Comment        string         `json:"comment"`
 	CardAcceptable string         `json:"cardAcceptable"`
 	SellerAddress  InvoiceAddress `json:"sellerAddress"`
 	BuyerAddress   InvoiceAddress `json:"buyerAddress"`
-	Items          []struct {
-		InvoiceItemId string `json:"invoiceItemId"`
-		ItemId        string `json:"itemId"`
-		Taxable       string `json:"taxable"`
-		Rate          int    `json:"rate"`
-		ItemName      string `json:"itemName"`
-		Description   string `json:"description"`
-		Qty           int    `json:"qty"`
-		Tags          string `json:"tags"`
-	} `json:"items"`
+	Notes          string         `json:"notes"`
+	Items          []Item         `json:"items"`
+}
+
+type Item struct {
+	InvoiceItemId string `json:"invoiceItemId"`
+	ItemId        string `json:"itemId"`
+	Taxable       string `json:"taxable"`
+	Rate          int    `json:"rate"`
+	ItemName      string `json:"itemName"`
+	Description   string `json:"description"`
+	Qty           int    `json:"qty"`
+	Tags          string `json:"tags"`
 }
 
 type InvoiceAddress struct {

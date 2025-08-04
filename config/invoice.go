@@ -8,8 +8,8 @@ import (
 
 // Invoice holds table configurations
 type Invoice struct {
-	Channel   string `yaml:"channel"`
-	ChainCode string `yaml:"chain_code"`
+	ChannelName   string `yaml:"channel_name"`
+	ChainCodeName string `yaml:"chain_code_name"`
 }
 
 var invoiceOnce = sync.Once{}
@@ -25,7 +25,7 @@ func loadInvoice(fileName string) error {
 	viper.AutomaticEnv()
 
 	invoiceConfig = &Invoice{
-		Channel: viper.GetString("smart_contract.identity.channel"),
+		ChannelName: viper.GetString("smart_contract.identity.channel_name"),
 	}
 
 	log.Println("table config ", invoiceConfig)

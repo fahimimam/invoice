@@ -1,14 +1,13 @@
 package api
 
 import (
+	"github.com/fahimimam/invoice/api/middleware"
+	"github.com/fahimimam/invoice/logger"
 	"github.com/go-chi/chi/v5"
-	"log"
 	"net/http"
 	"time"
 
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/triapex/auth/api/middleware"
-	"github.com/triapex/auth/logger"
 )
 
 var lgr logger.Logger
@@ -17,7 +16,7 @@ func SetLogger(l logger.Logger) {
 	lgr = l
 }
 
-func NewInvoiceRouter(orgCtrl *InvoiceController) http.Handler {
+func NewInvoiceRouter(invoiceCtlr *InvoiceController) http.Handler {
 	router := chi.NewRouter()
 	router.Use(middleware.RequestID)
 	router.Use(middleware.Logger(lgr))
@@ -33,22 +32,7 @@ func NewInvoiceRouter(orgCtrl *InvoiceController) http.Handler {
 			_, _ = w.Write([]byte("ok"))
 			return
 		})
-		r.Mount("/", invoiceRouter(orgCtrl))
-	})
-	return router
-}
-
-// NewSystemRouter - Handles system specific routes
-func NewSystemRouter(sysCtrl *SystemController) http.Handler {
-	log.Println("NewSystemRouter")
-	router := chi.NewRouter()
-	router.Use(middleware.RequestID)
-	router.Use(middleware.Logger(lgr))
-	router.Use(middleware.Headers)
-	router.Use(middleware.Cors())
-	router.Use(chimiddleware.Timeout(30 * time.Second))
-	router.Route("/", func(r chi.Router) {
-		r.Mount("/health", healthRouter(sysCtrl))
+		r.Mount("/", invoiceRouter(invoiceCtlr))
 	})
 	return router
 }
