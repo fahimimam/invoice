@@ -7,6 +7,7 @@ import (
 	"github.com/fahimimam/invoice/internal/network"
 	"github.com/fahimimam/invoice/internal/service"
 	"github.com/fahimimam/invoice/logger"
+	"github.com/unidoc/unipdf/v4/common/license"
 	"log"
 	"net/http"
 	"os"
@@ -24,12 +25,14 @@ const DefaultRefreshTokenDuration = 30
 
 // srvCmd is the serve sub command to start the api server
 var srvCmd = &cobra.Command{
-	Use:   "serve",
-	Short: "serve serves the auth server",
-	RunE:  serve,
+	Use:     "serve",
+	Short:   "serve serves the auth server",
+	RunE:    serve,
+	Aliases: []string{"s"},
 }
 
 func init() {
+
 	srvCmd.PersistentFlags().StringVarP(&cfgPath, "config", "c", "app.config.yaml", "config file path")
 }
 
@@ -38,6 +41,13 @@ func serve(cmd *cobra.Command, args []string) error {
 	//cfgInvoice := config.GetInvoice(cfgPath)
 
 	lgr := logger.DefaultOutStructLogger
+
+	// Make sure to load your metered License API key prior to using the library.
+	// If you need a key, you can sign up and create a free one at https://cloud.unidoc.io
+	err := license.SetMeteredKey(cfgApp.UnidocApiKey)
+	if err != nil {
+		panic(err)
+	}
 
 	// Connect NewNetworkRPCConnection...
 	networkConn, err := network.NewNetworkRPCConnection()

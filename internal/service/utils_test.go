@@ -49,7 +49,7 @@ func generatePDFInvoice(invoice *localModel.InvoiceInfo) ([]byte, error) {
 		pdfInvoice.AddLine(
 			item.Description,
 			fmt.Sprintf("%d", item.Qty),
-			fmt.Sprintf("%.2f", item.Rate),
+			fmt.Sprintf("%d", item.Rate),
 		)
 	}
 
@@ -64,7 +64,7 @@ func generatePDFInvoice(invoice *localModel.InvoiceInfo) ([]byte, error) {
 	}
 
 	// Customize invoice styling :cite[4]
-	customizeInvoiceStyle2(pdfInvoice)
+	customizeInvoiceStyle(pdfInvoice)
 
 	// Draw invoice to creator
 	if err := c.Draw(pdfInvoice); err != nil {
@@ -80,7 +80,7 @@ func generatePDFInvoice(invoice *localModel.InvoiceInfo) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-func customizeInvoiceStyle(invoice *creator.Invoice) {
+func customizeInvoiceStyle2(invoice *creator.Invoice) {
 	// Load fonts :cite[4]
 	fontHelvetica, _ := model.NewStandard14Font("Helvetica")
 	fontHelveticaBold, _ := model.NewStandard14Font("Helvetica-Bold")

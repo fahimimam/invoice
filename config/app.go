@@ -14,6 +14,7 @@ type Application struct {
 	Port            int           `yaml:"port"`
 	GracefulTimeout time.Duration `yaml:"graceful_timeout"`
 	Env             string        `yaml:"env"`
+	UnidocApiKey    string        `yaml:"unidoc_api_key"`
 }
 
 var appOnce = sync.Once{}
@@ -33,6 +34,7 @@ func loadApp(fileName string) error {
 		GracefulTimeout: viper.GetDuration("app.graceful_timeout"),
 		Port:            viper.GetInt("app.port"),
 		Env:             viper.GetString("app.env"),
+		UnidocApiKey:    viper.GetString("app.uni_doc_api_key"),
 	}
 
 	log.Println("app config ", appConfig)
