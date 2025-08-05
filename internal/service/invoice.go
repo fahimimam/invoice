@@ -9,7 +9,9 @@ import (
 	"github.com/fahimimam/invoice/logger"
 	localModel "github.com/fahimimam/invoice/model"
 	"github.com/unidoc/unipdf/v4/creator"
+	"log"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -101,11 +103,17 @@ func (is *InvoiceService) CloseInvoiceIdentityGateway() error {
 }
 
 func (is *InvoiceService) GeneratePDFInvoice(invoice *localModel.InvoiceInfo) ([]byte, error) {
+
 	c := creator.New()
 	c.SetPageMargins(50, 50, 50, 50) // Left, top, right, bottom margins
 
 	// Create a new invoice instance
 	pdfInvoice := c.NewInvoice()
+
+	logoPath := fmt.Sprintf("../../logos/%v.jpg", strings.ToLower(invoice.SellerAddress.Name))
+	logo, err := c.NewImageFromFile(logoPath)
+	// Set invoice logo
+	pdfInvoice.SetLogo(logo)
 
 	// Set invoice metadata :cite[1]:cite[4]
 	pdfInvoice.SetNumber(strconv.Itoa(int(invoice.ID)))
@@ -139,7 +147,7 @@ func (is *InvoiceService) GeneratePDFInvoice(invoice *localModel.InvoiceInfo) ([
 		pdfInvoice.AddLine(
 			item.Description,
 			fmt.Sprintf("%d", item.Qty),
-			fmt.Sprintf("%.2f", item.Rate),
+			fmt.Sprintf("%d", item.Rate),
 		)
 	}
 
@@ -154,7 +162,7 @@ func (is *InvoiceService) GeneratePDFInvoice(invoice *localModel.InvoiceInfo) ([
 	}
 
 	// Customize invoice styling :cite[4]
-	customizeInvoiceStyle2(pdfInvoice)
+	customizeInvoiceStyle(pdfInvoice)
 
 	// Draw invoice to creator
 	if err := c.Draw(pdfInvoice); err != nil {
@@ -167,5 +175,9 @@ func (is *InvoiceService) GeneratePDFInvoice(invoice *localModel.InvoiceInfo) ([
 		return nil, fmt.Errorf("failed to write PDF: %v", err)
 	}
 
+	err = c.WriteToFile("hello_world.pdf")
+	if err != nil {
+		log.Println("Write file error:", err)
+	}
 	return buf.Bytes(), nil
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/unidoc/unipdf/v4/model"
 )
 
-func customizeInvoiceStyle2(invoice *creator.Invoice) {
+func customizeInvoiceStyle(invoice *creator.Invoice) {
 	// Load fonts :cite[4]
 	fontHelvetica, _ := model.NewStandard14Font("Helvetica")
 	fontHelveticaBold, _ := model.NewStandard14Font("Helvetica-Bold")

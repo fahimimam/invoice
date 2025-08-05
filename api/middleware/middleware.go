@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/fahimimam/invoice/logger"
 	"net/http"
 )
 
