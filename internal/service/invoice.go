@@ -11,6 +11,7 @@ import (
 	"github.com/unidoc/unipdf/v4/creator"
 	"log"
 	"strconv"
+	"strings"
 )
 
 const (
@@ -109,7 +110,8 @@ func (is *InvoiceService) GeneratePDFInvoice(invoice *localModel.InvoiceInfo) ([
 	// Create a new invoice instance
 	pdfInvoice := c.NewInvoice()
 
-	logo, err := c.NewImageFromFile("/Users/pathaoltd/Downloads/logo.jpg")
+	logoPath := fmt.Sprintf("../../logos/%v.jpg", strings.ToLower(invoice.SellerAddress.Name))
+	logo, err := c.NewImageFromFile(logoPath)
 	// Set invoice logo
 	pdfInvoice.SetLogo(logo)
 
